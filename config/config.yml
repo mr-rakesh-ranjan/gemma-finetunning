@@ -1,0 +1,33 @@
+model:
+  name: "google/gemma-2b"
+  max_length: 512
+  batch_size: 4
+  learning_rate: 2e-5
+  num_epochs: 3
+  warmup_steps: 100
+  gradient_accumulation_steps: 4
+  weight_decay: 0.01
+  lora:
+    r: 8
+    alpha: 32
+    dropout: 0.1
+    target_modules: ["q_proj", "v_proj"]
+
+data:
+  train_split: 0.8
+  val_split: 0.2
+  seed: 42
+  max_samples: null  # Set to int value to limit dataset size
+
+training:
+  output_dir: "outputs"
+  logging_steps: 10
+  eval_steps: 100
+  save_steps: 500
+  max_grad_norm: 1.0
+  fp16: true
+  optim: "paged_adamw_32bit"
+
+wandb:
+  project: "gemma-icd-finetuning"
+  entity: "mr-rakesh-ranjan"
